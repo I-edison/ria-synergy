@@ -170,8 +170,29 @@ const formatNewsDate = (date) => {
     year: "numeric",
   }).format(d);
 };
-const getNewsImage = (item) =>
-  item.thumbnail || item.enclosure?.link || "assets/project.jpg";
+const DEFAULT_NEWS_IMAGE = "assets/News.png";
+const getNewsImage = (item) => {
+  const candidates = [
+    item.thumbnail,
+    item.enclosure?.link,
+    item.enclosure?.url,
+    item.media?.content,
+    item.media?.thumbnail,
+  ];
+  const contentImage = String(item.content || item.description || "").match(
+    /<img[^>]+src=["']([^"']+)["']/i,
+  )?.[1];
+  candidates.push(contentImage);
+
+  return (
+    candidates.find(
+      (url) =>
+        typeof url === "string" &&
+        /^https?:\/\//i.test(url) &&
+        !/\b(?:self|default|nsfw)\b/i.test(url),
+    ) || DEFAULT_NEWS_IMAGE
+  );
+};
 
 function setFeedStatus(text, error = false) {
   if (!feedStatus) return;
@@ -309,7 +330,7 @@ function renderNews(items, fromCache = false) {
       const date = escapeHtml(formatNewsDate(item.pubDate));
       const author = item.author ? ` · ${escapeHtml(item.author)}` : "";
       return `<article class="blog-card news-card">
-      <a class="blog-image" href="${link}" target="_blank" rel="noopener noreferrer" aria-label="Read ${title}"><img src="${image}" alt="" loading="lazy" onerror="this.onerror=null;this.src='assets/project.jpg'"></a>
+      <a class="blog-image" href="${link}" target="_blank" rel="noopener noreferrer" aria-label="Read ${title}"><img src="${image}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${DEFAULT_NEWS_IMAGE}'"></a>
       <div class="blog-body">
         <div class="blog-meta">CONSTRUCTION FORUM</div>
         <div class="blog-date">${date}${author}</div>
