@@ -113,7 +113,7 @@ select {
       rgba(0, 0, 0, 0.56) 46%,
       rgba(0, 0, 0, 0.18) 100%
     ),
-    url("assets/hero.png") center/cover no-repeat;
+    url("assets/hero.webp") center/cover no-repeat;
   transform: scale(1.04);
 }
 .hero-inner {
@@ -947,7 +947,7 @@ select {
   .hero:before {
     background:
       linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.45)),
-      url("assets/hero.png") center/cover;
+      url("assets/hero.webp") center/cover;
   }
   .hero-inner {
     display: block;

@@ -260,13 +260,23 @@ function parseRSS(xml) {
 }
 
 async function fetchText(url) {
-  const response = await fetch(url, { cache: "no-store" });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  const response = await fetch(url, {
+    cache: "no-store",
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timeout));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return await response.text();
 }
 
 async function fetchJSON(url) {
-  const response = await fetch(url, { cache: "no-store" });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  const response = await fetch(url, {
+    cache: "no-store",
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timeout));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return await response.json();
 }
@@ -283,7 +293,7 @@ function fetchRSS2JSONP() {
     const timer = setTimeout(() => {
       cleanup();
       reject(new Error("News service timed out"));
-    }, 12000);
+    }, 8000);
     function cleanup() {
       clearTimeout(timer);
       delete window[callback];
@@ -450,16 +460,6 @@ setInterval(() => loadConstructionNews(true), 15 * 60 * 1000);
   if (!slides.length) return;
   let index = 0;
   let timer;
-
-  let autoSlide = setInterval(() => {
-    let nextSlide = currentSlide + 1;
-
-    if (nextSlide >= slides.length) {
-      nextSlide = 0;
-    }
-
-    showSlide(nextSlide);
-  }, 5000);
 
   slides.forEach((_, i) => {
     const dot = document.createElement("button");
