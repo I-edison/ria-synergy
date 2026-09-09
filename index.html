@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="shortcut icon" href="assets\logo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets\favicon.png" type="image/x-icon" />
   </head>
   <body>
     <header class="site-header" id="top">
@@ -110,45 +110,71 @@
             <div class="about-slides">
               <div class="about-slide is-active">
                 <img
-                  src="assets/about.jpg"
-                  alt="Ria Synergy construction project"
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.41.24%20PM.jpeg"
+                  alt="Ria Synergy road construction project"
                   loading="lazy"
                 />
                 <div class="about-overlay">
-                  <span>OUR APPROACH</span
-                  ><strong>Building with purpose and precision.</strong>
+                  <span>ROAD CONSTRUCTION</span
+                  ><strong
+                    >Building safer, better-connected communities.</strong
+                  >
                 </div>
               </div>
               <div class="about-slide">
                 <img
-                  src="assets/hero.jpg"
-                  alt="Construction work by Ria Synergy"
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.41.24%20PM%20(1).jpeg"
+                  alt="Ria Synergy completed building project"
                   loading="lazy"
                 />
                 <div class="about-overlay">
-                  <span>QUALITY</span
-                  ><strong>Craftsmanship that stands the test of time.</strong>
+                  <span>BUILDING PROJECTS</span
+                  ><strong>Practical spaces built for lasting value.</strong>
                 </div>
               </div>
               <div class="about-slide">
                 <img
-                  src="assets/project.jpg"
-                  alt="Ria Synergy project"
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.41.24%20PM%20(2).jpeg"
+                  alt="Ria Synergy building construction work"
                   loading="lazy"
                 />
                 <div class="about-overlay">
-                  <span>OUR PROJECTS</span
-                  ><strong>Turning ambitious ideas into real spaces.</strong>
+                  <span>QUALITY CRAFTSMANSHIP</span
+                  ><strong>Careful work from foundation to finish.</strong>
                 </div>
               </div>
               <div class="about-slide">
                 <img
-                  src="assets/contact-card.jpg"
-                  alt="Ria Synergy construction team and project"
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.41.25%20PM.jpeg"
+                  alt="Ria Synergy drainage construction project"
                   loading="lazy"
                 />
                 <div class="about-overlay">
-                  <span>Ria SYNERGY</span
+                  <span>CIVIL ENGINEERING</span
+                  ><strong
+                    >Strong infrastructure designed for real needs.</strong
+                  >
+                </div>
+              </div>
+              <div class="about-slide">
+                <img
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.41.25%20PM%20(1).jpeg"
+                  alt="Ria Synergy road paving project"
+                  loading="lazy"
+                />
+                <div class="about-overlay">
+                  <span>PROJECT DELIVERY</span
+                  ><strong>From preparation to a finished road surface.</strong>
+                </div>
+              </div>
+              <div class="about-slide">
+                <img
+                  src="assets/WhatsApp%20Image%202026-09-09%20at%202.43.40%20PM.jpeg"
+                  alt="Ria Synergy road improvement project"
+                  loading="lazy"
+                />
+                <div class="about-overlay">
+                  <span>RIA SYNERGY</span
                   ><strong
                     >Reliable construction from concept to completion.</strong
                   >
@@ -396,36 +422,34 @@
                 <div>
                   <strong>Address</strong
                   ><span
-                    >Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit.</span
+                    >No 2, back of former Bob Izua Bar (bronze royal bar),
+                    Benin-Lagos express way, Oluku, Benin City. Edo State.</span
                   >
                 </div>
               </div>
               <div class="contact-row">
                 <div class="icon">☎</div>
-                <div><strong>Phone</strong><span>+234 123 456 7890</span></div>
+                <div>
+                  <strong>Phone</strong
+                  ><span>+234 814 668 2105, +234 815 188 3601</span>
+                </div>
               </div>
               <div class="contact-row">
                 <div class="icon">✉</div>
                 <div>
-                  <strong>Email</strong><span>riasynnergy@gmail.com</span>
+                  <strong>Email</strong><span>riasynnergy@yahoo.com</span>
                 </div>
               </div>
               <div class="contact-row">
                 <div class="icon">◷</div>
                 <div>
                   <strong>Opening Hours</strong
-                  ><span>Mon - Sat, 8:00 AM - 6:00 PM</span>
+                  ><span>Mon - Sat, 8:00 AM - 5:00 PM</span>
                 </div>
               </div>
             </div>
           </div>
-          <form
-            class="form"
-            id="contactForm"
-            action="https://formspree.io/f/mkgoblgq"
-            method="POST"
-          >
+          <form class="form" id="contactForm">
             <div class="form-row">
               <div class="field">
                 <label for="name">Full Name</label
@@ -478,8 +502,13 @@
               ></textarea>
             </div>
             <div class="form-message" role="status"></div>
-            <button class="btn btn-primary" type="submit" name="submit">
-              Send Enquiry →
+            <button
+              class="btn btn-primary whatsapp-btn"
+              type="submit"
+              name="submit"
+              style="background-color: #25d366; color: white"
+            >
+              Send Enquiry on WhatsApp →
             </button>
           </form>
         </div>
@@ -502,6 +531,23 @@
           src="assets/project.jpg"
           alt="Project preview"
         />
+        <div class="modal-gallery" aria-label="Project images">
+          <button
+            class="modal-gallery-arrow modal-gallery-prev"
+            type="button"
+            aria-label="Previous project image"
+          >
+            ←
+          </button>
+          <div class="modal-thumbs" id="modalThumbs"></div>
+          <button
+            class="modal-gallery-arrow modal-gallery-next"
+            type="button"
+            aria-label="Next project image"
+          >
+            →
+          </button>
+        </div>
         <p id="modalText">Construction project by Ria Synergy Limited.</p>
       </div>
     </div>
@@ -533,7 +579,7 @@
           <form
             class="newsletter"
             id="newsletterForm"
-            action="https://buttondown.com/api/emails/embed-subscribe/iyase"
+            action="https://buttondown.com/api/emails/embed-subscribe/ria-synergy"
             method="post"
           >
             <input

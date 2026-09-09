@@ -29,17 +29,50 @@ window.addEventListener("scroll", updateActive, { passive: true });
 updateActive();
 const modal = $("#projectModal"),
   modalMain = $("#modalMain"),
-  modalTitle = $("#modalTitle");
+  modalTitle = $("#modalTitle"),
+  modalThumbs = $("#modalThumbs");
 if (modal) {
-  $$(".project-card").forEach((card) =>
+  const projects = $$(".project-card").map((card) => ({
+    title: card.dataset.title || "Project",
+    image: $("img", card).src,
+    alt: $("img", card).alt,
+  }));
+  let activeProject = 0;
+
+  const showProject = (index) => {
+    activeProject = (index + projects.length) % projects.length;
+    const project = projects[activeProject];
+    modalTitle.textContent = project.title;
+    modalMain.src = project.image;
+    modalMain.alt = project.alt || project.title;
+    $$(".modal-thumb", modalThumbs).forEach((thumb, thumbIndex) =>
+      thumb.classList.toggle("active", thumbIndex === activeProject),
+    );
+  };
+
+  projects.forEach((project, index) => {
+    const thumb = document.createElement("button");
+    thumb.className = "modal-thumb";
+    thumb.type = "button";
+    thumb.setAttribute("aria-label", `View ${project.title}`);
+    thumb.innerHTML = `<img src="${project.image}" alt="${project.alt || project.title}">`;
+    thumb.addEventListener("click", () => showProject(index));
+    modalThumbs.appendChild(thumb);
+  });
+
+  $$(".project-card").forEach((card, index) =>
     card.addEventListener("click", () => {
-      modalTitle.textContent = card.dataset.title || "Project";
-      modalMain.src = $("img", card).src;
-      modalMain.alt = card.dataset.title || "Project";
+      showProject(index);
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("no-scroll");
     }),
+  );
+  $(".modal-gallery-prev", modal)?.addEventListener("click", () =>
+    showProject(activeProject - 1),
+  );
+  $(".modal-gallery-next", modal)?.addEventListener("click", () =>
+    showProject(activeProject + 1),
   );
   const close = () => {
     modal.classList.remove("open");
@@ -52,46 +85,40 @@ if (modal) {
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") close();
+    if (modal.classList.contains("open") && e.key === "ArrowLeft") {
+      showProject(activeProject - 1);
+    }
+    if (modal.classList.contains("open") && e.key === "ArrowRight") {
+      showProject(activeProject + 1);
+    }
   });
 }
 const form = $("#contactForm");
 
 if (form) {
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const msg = $(".form-message");
-    const button = form.querySelector('button[type="submit"]');
+    const formData = new FormData(form);
+    const service = $("#service").value || "Not specified";
+    const whatsappMessage = [
+      "Hello Ria Synergy Limited, I would like to make an enquiry.",
+      "",
+      `Name: ${formData.get("fullname")}`,
+      `Email: ${formData.get("email")}`,
+      `Phone: ${formData.get("phoneNumber") || "Not provided"}`,
+      `Service: ${service}`,
+      `Project details: ${formData.get("message")}`,
+    ].join("\n");
 
-    button.disabled = true;
-    button.textContent = "Sending...";
-
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      if (response.ok) {
-        msg.textContent =
-          "Thanks! Your enquiry has been received. We will get back to you shortly.";
-
-        msg.classList.add("show");
-        form.reset();
-      } else {
-        msg.textContent = "Something went wrong. Please try again.";
-        msg.classList.add("show");
-      }
-    } catch (error) {
-      msg.textContent = "Unable to send your enquiry. Please try again later.";
-      msg.classList.add("show");
-    }
-
-    button.disabled = false;
-    button.textContent = "Send Message";
+    window.open(
+      `https://wa.me/2348146682105?text=${encodeURIComponent(whatsappMessage)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    msg.textContent = "Opening WhatsApp with your enquiry...";
+    msg.classList.add("show");
   });
 }
 const news = $("#newsletterForm");
@@ -171,8 +198,14 @@ const formatNewsDate = (date) => {
   }).format(d);
 };
 const DEFAULT_NEWS_IMAGE = "assets/News.png";
+const normalizeImageUrl = (url) => {
+  if (typeof url !== "string" || !url.trim()) return "";
+  const trimmedUrl = url.trim();
+  return trimmedUrl.startsWith("//") ? `https:${trimmedUrl}` : trimmedUrl;
+};
 const getNewsImage = (item) => {
   const candidates = [
+    item.image,
     item.thumbnail,
     item.enclosure?.link,
     item.enclosure?.url,
@@ -184,14 +217,13 @@ const getNewsImage = (item) => {
   )?.[1];
   candidates.push(contentImage);
 
-  return (
-    candidates.find(
+  const image = candidates
+    .map(normalizeImageUrl)
+    .find(
       (url) =>
-        typeof url === "string" &&
-        /^https?:\/\//i.test(url) &&
-        !/\b(?:self|default|nsfw)\b/i.test(url),
-    ) || DEFAULT_NEWS_IMAGE
-  );
+        /^https?:\/\//i.test(url) && !/\b(?:self|default|nsfw)\b/i.test(url),
+    );
+  return image || DEFAULT_NEWS_IMAGE;
 };
 
 function setFeedStatus(text, error = false) {
