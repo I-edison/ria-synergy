@@ -30,35 +30,85 @@ updateActive();
 const modal = $("#projectModal"),
   modalMain = $("#modalMain"),
   modalTitle = $("#modalTitle"),
-  modalThumbs = $("#modalThumbs");
+  modalThumbs = $("#modalThumbs"),
+  modalText = $("#modalText");
 if (modal) {
-  const projects = $$(".project-card").map((card) => ({
-    title: card.dataset.title || "Project",
-    image: $("img", card).src,
-    alt: $("img", card).alt,
-  }));
+  const projects = $$(".project-card").map((card, index) => {
+    const imageElement = $("img", card);
+    const imageList = (card.dataset.images || "")
+      .split("|")
+      .map((src) => src.trim())
+      .filter(Boolean);
+
+    return {
+      title:
+        card.dataset.title ||
+        card.querySelector("h3")?.textContent ||
+        `Project ${index + 1}`,
+      images: imageList.length
+        ? imageList
+        : [imageElement?.src || "assets/project.jpg"],
+      alt:
+        imageElement?.alt || `${card.dataset.title || "Project"} construction`,
+    };
+  });
   let activeProject = 0;
+  let activeImage = 0;
+
+  const renderThumbs = () => {
+    const project = projects[activeProject];
+    if (!project) return;
+
+    modalThumbs.innerHTML = "";
+    project.images.forEach((image, imageIndex) => {
+      const thumb = document.createElement("button");
+      thumb.className = "modal-thumb";
+      thumb.type = "button";
+      thumb.setAttribute(
+        "aria-label",
+        `View ${project.title} image ${imageIndex + 1}`,
+      );
+      thumb.innerHTML = `<img src="${image}" alt="${project.alt || project.title}">`;
+      thumb.classList.toggle("active", imageIndex === activeImage);
+      thumb.addEventListener("click", () => {
+        activeImage = imageIndex;
+        updateModalView();
+      });
+      modalThumbs.appendChild(thumb);
+    });
+  };
+
+  const updateModalView = () => {
+    const project = projects[activeProject];
+    if (!project) return;
+
+    activeImage = Math.min(activeImage, project.images.length - 1);
+    modalTitle.textContent = project.title;
+    modalMain.src = project.images[activeImage];
+    modalMain.alt = project.alt || project.title;
+    modalText.textContent = `${project.title} • ${project.images.length} image${project.images.length > 1 ? "s" : ""}`;
+    renderThumbs();
+  };
 
   const showProject = (index) => {
     activeProject = (index + projects.length) % projects.length;
-    const project = projects[activeProject];
-    modalTitle.textContent = project.title;
-    modalMain.src = project.image;
-    modalMain.alt = project.alt || project.title;
-    $$(".modal-thumb", modalThumbs).forEach((thumb, thumbIndex) =>
-      thumb.classList.toggle("active", thumbIndex === activeProject),
-    );
+    activeImage = 0;
+    updateModalView();
   };
 
-  projects.forEach((project, index) => {
-    const thumb = document.createElement("button");
-    thumb.className = "modal-thumb";
-    thumb.type = "button";
-    thumb.setAttribute("aria-label", `View ${project.title}`);
-    thumb.innerHTML = `<img src="${project.image}" alt="${project.alt || project.title}">`;
-    thumb.addEventListener("click", () => showProject(index));
-    modalThumbs.appendChild(thumb);
-  });
+  const showImage = (direction) => {
+    const project = projects[activeProject];
+    if (!project) return;
+
+    if (project.images.length <= 1) {
+      showProject(activeProject + direction);
+      return;
+    }
+
+    activeImage =
+      (activeImage + direction + project.images.length) % project.images.length;
+    updateModalView();
+  };
 
   $$(".project-card").forEach((card, index) =>
     card.addEventListener("click", () => {
@@ -69,10 +119,10 @@ if (modal) {
     }),
   );
   $(".modal-gallery-prev", modal)?.addEventListener("click", () =>
-    showProject(activeProject - 1),
+    showImage(-1),
   );
   $(".modal-gallery-next", modal)?.addEventListener("click", () =>
-    showProject(activeProject + 1),
+    showImage(1),
   );
   const close = () => {
     modal.classList.remove("open");
@@ -86,10 +136,10 @@ if (modal) {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") close();
     if (modal.classList.contains("open") && e.key === "ArrowLeft") {
-      showProject(activeProject - 1);
+      showImage(-1);
     }
     if (modal.classList.contains("open") && e.key === "ArrowRight") {
-      showProject(activeProject + 1);
+      showImage(1);
     }
   });
 }
