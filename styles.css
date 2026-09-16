@@ -285,11 +285,14 @@ select {
   color: var(--blue);
 }
 .service-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  overflow-x: auto;
   gap: 14px;
+  padding: 4px 2px 14px;
+  scrollbar-width: thin;
 }
 .service-card {
+  flex: 0 0 220px;
   background: #fff;
   border: 1px solid #ededed;
   padding: 26px 20px;
@@ -891,7 +894,7 @@ select {
     height: 470px;
   }
   .service-grid {
-    grid-template-columns: repeat(3, 1fr);
+    overflow-x: auto;
   }
   .process-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1002,7 +1005,7 @@ select {
     height: 240px;
   }
   .service-grid {
-    grid-template-columns: 1fr 1fr;
+    overflow-x: auto;
   }
   .process-grid {
     grid-template-columns: 1fr 1fr;
@@ -1030,7 +1033,7 @@ select {
 }
 @media (max-width: 430px) {
   .service-grid {
-    grid-template-columns: 1fr;
+    overflow-x: auto;
   }
   .hero h1 {
     font-size: 62px;
