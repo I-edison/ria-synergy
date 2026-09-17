@@ -1,0 +1,51 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6F8FB"/>
+      <stop offset="1" stop-color="#E7EEF4"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#1E3C72"/>
+      <stop offset="1" stop-color="#0E2341"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F4A62A"/>
+      <stop offset="1" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="926" cy="160" r="118" fill="#DAE9F7"/>
+  <circle cx="212" cy="138" r="76" fill="#E8F0FF"/>
+  <g opacity="0.9">
+    <rect x="180" y="430" width="840" height="220" rx="18" fill="url(#panel)"/>
+    <rect x="230" y="350" width="260" height="200" rx="10" fill="#3B5B8B"/>
+    <rect x="520" y="310" width="220" height="240" rx="10" fill="#2B4D73"/>
+    <rect x="770" y="250" width="190" height="300" rx="10" fill="#1F3D5F"/>
+    <g opacity="0.8">
+      <rect x="270" y="395" width="120" height="110" fill="#D9E7F4"/>
+      <rect x="410" y="395" width="50" height="110" fill="#E7F0FC"/>
+      <rect x="555" y="355" width="120" height="150" fill="#DCEBFC"/>
+      <rect x="690" y="355" width="30" height="150" fill="#EAF3FE"/>
+      <rect x="810" y="290" width="110" height="215" fill="#D8EAF7"/>
+      <rect x="935" y="290" width="20" height="215" fill="#EAF3FE"/>
+    </g>
+    <path d="M950 260L1010 200H1032L972 260H950Z" fill="url(#accent)"/>
+    <rect x="986" y="195" width="12" height="260" rx="6" fill="#D3DDE8"/>
+    <rect x="930" y="210" width="120" height="18" rx="9" fill="#C9D4E1"/>
+    <rect x="937" y="235" width="26" height="130" rx="13" fill="#DDE8F4"/>
+    <rect x="1004" y="235" width="26" height="130" rx="13" fill="#DDE8F4"/>
+  </g>
+  <g>
+    <rect x="700" y="120" width="240" height="130" rx="18" fill="#FFFFFF" fill-opacity="0.72"/>
+    <rect x="736" y="160" width="168" height="14" rx="7" fill="#C3D1E0"/>
+    <rect x="736" y="190" width="118" height="14" rx="7" fill="#D2DCE8"/>
+    <rect x="736" y="220" width="98" height="14" rx="7" fill="#E6EDF6"/>
+  </g>
+  <g>
+    <path d="M154 310C214 255 292 236 349 252C404 267 440 314 495 334C540 350 577 326 623 310C692 286 767 289 819 316C868 341 892 391 930 396C984 404 1050 360 1080 312V236H154V310Z" fill="#C3D7EB" opacity="0.75"/>
+  </g>
+  <g>
+    <text x="180" y="690" fill="#183152" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Construction Update</text>
+    <text x="180" y="744" fill="#52677F" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="500">Blog image placeholder</text>
+  </g>
+</svg>
