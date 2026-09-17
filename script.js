@@ -247,7 +247,7 @@ const formatNewsDate = (date) => {
     year: "numeric",
   }).format(d);
 };
-const DEFAULT_NEWS_IMAGE = "assets/News.png";
+const DEFAULT_NEWS_IMAGE = "assets/blog-placeholder.svg";
 const normalizeImageUrl = (url) => {
   if (typeof url !== "string" || !url.trim()) return "";
   const trimmedUrl = url.trim();

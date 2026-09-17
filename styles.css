@@ -508,7 +508,7 @@ select {
 }
 .blog-image {
   height: 190px;
-  background: #ddd;
+  background: url("assets/blog-placeholder.svg") center/cover no-repeat;
   overflow: hidden;
   display: block;
 }
@@ -656,6 +656,16 @@ select {
   color: var(--gold);
   font-size: 21px;
   width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-row .icon img {
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: brightness(0) saturate(100%) invert(46%) sepia(92%) saturate(719%)
+    hue-rotate(166deg) brightness(93%) contrast(91%);
 }
 .contact-row strong {
   display: block;
